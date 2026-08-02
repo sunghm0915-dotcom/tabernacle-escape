@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>②③④ 2층 힌트 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 힌트/문제 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="scene-layer on">
+    <div class="hint-card fade-in">
+      <h1>②③④ 안뜰(2층) · 숨은 QR (매트 옆)</h1>
+      <h2>어느 미션에서 막혔나요?</h2>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="m2">M2</button>
+        <button class="tab-btn" data-tab="m3">M3</button>
+        <button class="tab-btn" data-tab="m4">M4</button>
+      </div>
+
+      <div class="tab-panel active" data-tab="m2">
+        <p class="fill-me">
+          여기에 M2(칠교 조합) 힌트를 적어주세요.<br>
+          예: "뒤집어도 되는 조각이 있는지 다시 확인해보라."
+        </p>
+      </div>
+      <div class="tab-panel" data-tab="m3">
+        <p class="fill-me">
+          여기에 M3(닮음 문제) 힌트를 적어주세요.<br>
+          <span style="color:var(--ink-dim);font-size:12px;">※ 우리 조에 배정된 문제 번호에 맞는 힌트를 적어주세요 (조마다 문제·정답이 다릅니다).</span>
+        </p>
+      </div>
+      <div class="tab-panel" data-tab="m4">
+        <p class="fill-me">
+          여기에 M4(삼각비 · 거리공식 · 성경 찾기) 힌트를 적어주세요.<br>
+          예: "책의 장과 절, 두 숫자를 어디서 얻었는지 다시 짚어보라."
+        </p>
+      </div>
+
+      <div class="hint-foot">한 QR을 한 조의 세 미션(M2·M3·M4)이 함께 공유합니다. 탭으로 미션을 골라 해당 힌트만 보여주세요.</div>
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#8a6f34', density: 24 });
+  initScene({ timeline: function () {
+    var layer = document.querySelector('.scene-layer');
+    return [{ at: 0, do: function () { layer.classList.add('on'); } }];
+  } });
+  initBgm();
+</script>
+</body>
+</html>
