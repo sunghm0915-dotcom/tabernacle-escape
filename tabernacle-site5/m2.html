@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko" class="scroll-page">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>② M2 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage scroll">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="story-card" id="storyBox">
+    <div class="eyebrow">안뜰, 2층</div>
+    <p>우리는 조각을 모두 찾았다.</p>
+    <p>이제 그 조각들을 조립해서, 성막을 짓기 위한 설계도를 완성해야 한다.</p>
+  </div>
+  <button class="reveal-btn" id="revealBtn">▶ 임무 확인하기</button>
+
+  <div class="problem-card" id="missionBox" style="display:none;">
+    <h1>② 안뜰 · 2층</h1>
+    <h2>M2 — 설계도를 조립하라</h2>
+    <p class="note">찾아온 조각들을 <b>칠교(七巧) 방식</b>으로 맞춰 하나의 설계도를 완성하세요.</p>
+    <p class="note">완성하면 조 리더에게 확인받으세요.</p>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#8a6f34', density: 24 });
+  var bgm = initBgm();
+  document.getElementById('revealBtn').addEventListener('click', function () {
+    revealTransition(document.getElementById('storyBox'), this, document.getElementById('missionBox'), 'dissolve');
+    if (bgm) bgm.playFromGesture();
+  });
+</script>
+</body>
+</html>

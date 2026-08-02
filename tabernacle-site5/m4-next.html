@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>④ 40:6 확인 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 힌트/문제 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="scene-layer on">
+    <div class="hint-card fade-in" style="text-align:center;">
+      <h1>④ 뜰 · 키트 바닥 카드</h1>
+      <h2 style="font-size:28px;letter-spacing:.06em;color:var(--gold-bright);">출애굽기 40 : 6</h2>
+      <div class="tab-panel active" data-tab="m4n">
+        <p class="fill-me" style="font-size:14px;">
+          여기에 찾아낸 구절(출애굽기 40:6)의 실제 성경 본문을 넣어주세요.<br>
+          (교회에서 쓰는 번역본 그대로 붙여넣으시면 됩니다.)
+        </p>
+        <p style="font-size:15px;line-height:1.8;margin-top:16px;">
+          번제단과 물두멍의 자리를 찾았다.<br>키트 안 모형을 매트 위, <b style="color:var(--gold-bright);">뜰</b>의 그 자리에 놓으라.
+        </p>
+      </div>
+      <div class="hint-foot" style="margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);
+        font-size:15px;color:var(--gold-bright);letter-spacing:.03em;">
+        다음 행동 — 3층 성소로 가시오
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#d4af5a', density: 40 });
+  initScene({ timeline: function () {
+    var layer = document.querySelector('.scene-layer');
+    return [{ at: 0, do: function () { layer.classList.add('on'); } }];
+  } });
+  initBgm();
+</script>
+</body>
+</html>

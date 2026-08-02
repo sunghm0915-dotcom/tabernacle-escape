@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>① 모세의 편지 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+
+  <!-- 나중에 영상 파일을 넣으려면: assets/video/brief.mp4 를 넣고 아래 src를 채우세요 -->
+  <div class="media-slot empty">
+    <video muted playsinline preload="none"></video>
+  </div>
+  <!-- BGM: assets/audio/brief.mp3 라는 이름으로 파일만 올리면 바로 재생됩니다 -->
+  <audio class="bgm" loop preload="none" src="assets/audio/brief.mp3"></audio>
+
+  <button class="replay-btn" aria-label="다시보기">↻</button>
+
+  <div class="start-overlay">
+    <div class="room-tag">① 뜰 · 처음 보는 QR</div>
+    <div class="emblem">✉</div>
+    <p>화면을 터치하면 시작합니다<br><span style="font-size:11px;opacity:.7;">(조장만 스캔, 다 같이 보기)</span></p>
+  </div>
+
+  <div class="scene-layer" id="scene-a">
+    <div class="eyebrow">광야, 그 밤</div>
+    <div class="line fade-in">나는 광야에서<br>그 <b>설계</b>를 받았다.<br>시간이 많지 않다.</div>
+  </div>
+
+  <div class="scene-layer" id="scene-b">
+    <div class="scroll-wrap" id="scrollWrap">
+      <div class="scroll-text">
+        "하나님이 명하신 그 집이<br>흩어졌다.<br><br><b>너희가 그 손으로<br>다시 세우라.</b>"
+      </div>
+    </div>
+  </div>
+
+  <div class="scene-layer" id="scene-c">
+    <div class="silhouette-wrap" id="silhouette">
+      <svg viewBox="0 0 300 200">
+        <path class="draw-line" d="M40,170 L40,90 L150,30 L260,90 L260,170 Z"/>
+        <path class="draw-line" d="M40,170 L260,170" style="animation-delay:.4s"/>
+        <path class="draw-line" d="M90,170 L90,110" style="animation-delay:.8s"/>
+        <path class="draw-line" d="M150,170 L150,80" style="animation-delay:1s"/>
+        <path class="draw-line" d="M210,170 L210,110" style="animation-delay:1.2s"/>
+        <path class="draw-line" d="M40,130 L260,130" style="animation-delay:1.4s"/>
+      </svg>
+    </div>
+    <div class="eyebrow">설계도가, 다시</div>
+  </div>
+
+  <div class="scene-layer" id="scene-d">
+    <div class="title-card">
+      <small>PROJECT</small>
+      TABERNACLE
+      <div style="font-size:.42em;letter-spacing:.15em;color:var(--ink-dim);margin-top:10px;">하나님의 집을 완성하라</div>
+    </div>
+  </div>
+
+  <div class="next-caption">
+    <div class="tag">다음 행동</div>
+    <div class="msg">옆방(방1)에서 조각을 찾으라</div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#d4af5a', density: 70 });
+
+  initScene({
+    timeline: function () {
+      var a = document.getElementById('scene-a');
+      var b = document.getElementById('scene-b');
+      var scroll = document.getElementById('scrollWrap');
+      var c = document.getElementById('scene-c');
+      var sil = document.getElementById('silhouette');
+      var d = document.getElementById('scene-d');
+      var cap = document.querySelector('.next-caption');
+      return [
+        { at: 0,     do: function () { a.classList.add('on'); } },
+        { at: 4200,  do: function () { a.classList.remove('on'); } },
+        { at: 4700,  do: function () { b.classList.add('on'); } },
+        { at: 5100,  do: function () { scroll.classList.add('open'); } },
+        { at: 10300, do: function () { b.classList.remove('on'); scroll.classList.remove('open'); } },
+        { at: 10800, do: function () { c.classList.add('on'); sil.classList.add('on'); } },
+        { at: 16000, do: function () { c.classList.remove('on'); sil.classList.remove('on'); } },
+        { at: 16500, do: function () { d.classList.add('on'); } },
+        { at: 21000, do: function () { cap.classList.add('on'); } }
+      ];
+    }
+  });
+</script>
+</body>
+</html>

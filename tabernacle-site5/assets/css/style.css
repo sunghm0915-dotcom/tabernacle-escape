@@ -1,0 +1,373 @@
+/* ============================================================
+   2026 성막 방탈출 — 공용 스타일시트
+   이 파일 하나를 7개 페이지가 전부 같이 씁니다.
+   색상만 바꾸고 싶으면 아래 :root 안의 값만 고치면 전체에 반영됩니다.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Song+Myung&family=Noto+Serif+KR:wght@400;600;700&display=swap');
+
+:root{
+  --navy:#0f1626;
+  --navy-deep:#070b14;
+  --gold:#d4af5a;
+  --gold-bright:#f3d98c;
+  --gold-dim:#8a6f34;
+  --sand:#e9d8ad;
+  --cream:#f6ecd4;
+  --ink:#efe6d1;
+  --ink-dim:#b9ad91;
+  --line:rgba(212,175,90,.35);
+  --shadow:rgba(0,0,0,.55);
+}
+
+*{box-sizing:border-box;}
+html,body{
+  margin:0;padding:0;height:100%;
+  background:var(--navy-deep);
+  color:var(--ink);
+  font-family:"Noto Serif KR","Song Myung",serif;
+  overflow:hidden;
+}
+
+/* ---------- 전체 무대 ---------- */
+.stage{
+  position:relative;
+  width:100%;height:100dvh;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(212,175,90,.10), transparent 60%),
+    linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 70%, #04060b 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* 은은한 별/모래 캔버스 */
+canvas.bg-particles{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;
+  opacity:.75;
+}
+
+/* ---------- 터치하여 시작 오버레이 ---------- */
+.start-overlay{
+  position:absolute;inset:0;z-index:50;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:var(--navy-deep);
+  text-align:center;
+  transition:opacity .6s ease;
+  padding:24px;
+}
+.start-overlay.hide{opacity:0;pointer-events:none;}
+.start-overlay .emblem{
+  width:64px;height:64px;margin-bottom:18px;
+  border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:26px;
+  animation:pulseRing 2.4s ease-in-out infinite;
+}
+@keyframes pulseRing{
+  0%,100%{box-shadow:0 0 0 0 rgba(212,175,90,.35);}
+  50%{box-shadow:0 0 0 14px rgba(212,175,90,0);}
+}
+.start-overlay p{
+  margin:0;font-size:15px;letter-spacing:.12em;color:var(--ink-dim);
+}
+.start-overlay .room-tag{
+  font-size:12px;color:var(--gold);letter-spacing:.2em;margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+/* ---------- 씬(장면) 레이어 ---------- */
+.scene-layer{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8vh 8vw;
+  text-align:center;
+  opacity:0;
+  transition:opacity 1.2s ease;
+  pointer-events:none;
+}
+.scene-layer.on{opacity:1;pointer-events:auto;}
+
+.eyebrow{
+  font-size:12px;letter-spacing:.35em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:14px;opacity:.85;
+}
+.line{
+  font-size:clamp(18px,4.6vw,30px);
+  line-height:1.65;
+  color:var(--ink);
+  max-width:640px;
+  text-shadow:0 2px 18px var(--shadow);
+}
+.line b{color:var(--gold-bright);font-weight:600;}
+.title-card{
+  font-size:clamp(22px,6vw,40px);
+  color:var(--gold-bright);
+  letter-spacing:.06em;
+  line-height:1.5;
+  text-shadow:0 0 26px rgba(243,217,140,.35);
+}
+.title-card small{
+  display:block;font-size:.42em;color:var(--gold-dim);letter-spacing:.3em;margin-bottom:14px;
+}
+
+/* 타이핑 텍스트 */
+.typewrite{
+  display:inline-block;overflow:hidden;white-space:pre-wrap;
+  border-right:2px solid var(--gold);
+}
+
+/* ---------- 다음 행동 캡션 ---------- */
+.next-caption{
+  position:absolute;left:0;right:0;bottom:0;z-index:30;
+  padding:22px 20px calc(22px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg, transparent, rgba(4,6,11,.92) 55%);
+  text-align:center;
+  opacity:0;transform:translateY(14px);
+  transition:opacity 1s ease, transform 1s ease;
+}
+.next-caption.on{opacity:1;transform:translateY(0);}
+.next-caption .tag{
+  font-size:11px;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:8px;
+}
+.next-caption .msg{
+  font-size:clamp(16px,4.4vw,22px);color:var(--gold-bright);font-weight:600;letter-spacing:.02em;
+}
+
+/* ---------- 리플레이 버튼 ---------- */
+.replay-btn{
+  position:absolute;top:calc(16px + env(safe-area-inset-top));right:16px;z-index:40;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(15,22,38,.55);
+  color:var(--ink-dim);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .6s ease;
+}
+.replay-btn.show{opacity:1;}
+
+/* ---------- 미디어(영상/오디오) 슬롯 ---------- */
+.media-slot{position:absolute;inset:0;z-index:5;background:#000;}
+.media-slot video{width:100%;height:100%;object-fit:cover;display:block;}
+.media-slot.empty{display:none;}
+
+/* ---------- 커튼(휘장) ---------- */
+.curtain{
+  position:absolute;top:0;bottom:0;width:52%;z-index:20;
+  background:
+    repeating-linear-gradient(90deg, #5b1f22 0 18px, #6c2529 18px 36px);
+  box-shadow:0 0 60px rgba(0,0,0,.6) inset;
+  transition:transform 2.4s cubic-bezier(.7,0,.2,1);
+}
+.curtain.left{left:0;border-right:2px solid var(--gold-dim);}
+.curtain.right{right:0;border-left:2px solid var(--gold-dim);}
+.curtain.open.left{transform:translateX(-102%);}
+.curtain.open.right{transform:translateX(102%);}
+
+/* ---------- SVG 실루엣 무대 ---------- */
+.silhouette-wrap{width:min(72vw,340px);margin-bottom:26px;opacity:0;transform:translateY(10px);transition:opacity 1.4s ease, transform 1.4s ease;}
+.silhouette-wrap.on{opacity:1;transform:translateY(0);}
+.silhouette-wrap svg{width:100%;height:auto;overflow:visible;}
+.draw-line{
+  stroke:var(--gold);stroke-width:1.4;fill:none;
+  stroke-dasharray:600;stroke-dashoffset:600;
+  animation:drawLine 2.6s ease forwards;
+}
+@keyframes drawLine{to{stroke-dashoffset:0;}}
+
+/* ---------- 편지(두루마리) ---------- */
+.scroll-wrap{
+  position:relative;width:min(78vw,360px);
+  padding:34px 26px;
+  background:linear-gradient(180deg,#efe2bd,#e3d3a4);
+  color:#3a2c14;
+  border-radius:6px;
+  box-shadow:0 18px 60px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.08);
+  transform:scaleY(.06);transform-origin:top center;
+  transition:transform 1.4s cubic-bezier(.2,.8,.2,1);
+}
+.scroll-wrap.open{transform:scaleY(1);}
+.scroll-wrap .scroll-text{
+  font-size:clamp(14px,3.6vw,18px);line-height:1.85;
+  opacity:0;transition:opacity .8s ease 1s;
+}
+.scroll-wrap.open .scroll-text{opacity:1;}
+.scroll-wrap b{color:#7a4b12;}
+
+/* ---------- 반전(twist) ---------- */
+.flash{
+  position:absolute;inset:0;background:#fff;opacity:0;z-index:60;pointer-events:none;
+}
+.flash.hit{animation:flashPop .55s ease;}
+@keyframes flashPop{0%{opacity:0;}12%{opacity:.9;}100%{opacity:0;}}
+.shake{animation:shakeIt .55s ease;}
+@keyframes shakeIt{
+  0%,100%{transform:translate(0,0);}
+  20%{transform:translate(-6px,2px);}
+  40%{transform:translate(5px,-3px);}
+  60%{transform:translate(-4px,3px);}
+  80%{transform:translate(3px,-2px);}
+}
+.empty-pedestal{width:min(50vw,220px);opacity:0;transition:opacity 1.6s ease;}
+.empty-pedestal.on{opacity:1;}
+
+/* 언약궤가 좌대로 내려와 안치되는 효과 */
+.ark-box{
+  transform:translateY(-70px);opacity:0;
+  transition:transform 1.8s cubic-bezier(.2,.8,.2,1), opacity 1s ease;
+}
+.ark-box.on{transform:translateY(0);opacity:1;}
+
+/* ---------- 빛 폭발(엔딩) ---------- */
+.burst{
+  position:absolute;left:50%;top:50%;width:10px;height:10px;
+  background:radial-gradient(circle, rgba(255,244,214,.95), rgba(243,217,140,0) 70%);
+  transform:translate(-50%,-50%) scale(0);
+  z-index:6;pointer-events:none;
+  transition:transform 2.2s cubic-bezier(.15,.8,.2,1), opacity 2.2s ease;
+  opacity:0;
+}
+.burst.on{transform:translate(-50%,-50%) scale(70);opacity:1;}
+
+/* ---------- 비포/애프터 대비 ---------- */
+.compare{
+  display:flex;gap:22px;align-items:center;justify-content:center;
+  margin:18px 0 24px;flex-wrap:wrap;
+}
+.compare .card{
+  width:130px;padding:16px 10px;border:1px solid var(--line);border-radius:10px;
+  background:rgba(255,255,255,.03);
+  font-size:12px;color:var(--ink-dim);letter-spacing:.05em;
+}
+.compare .card b{display:block;color:var(--gold-bright);font-size:13px;margin-bottom:6px;}
+.compare .arrow{color:var(--gold);font-size:20px;}
+
+/* ---------- 말씀 카드 ---------- */
+.verse-card{
+  margin:20px auto 8px;max-width:560px;padding:20px 22px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  font-size:clamp(14px,3.6vw,17px);line-height:1.85;color:var(--sand);
+}
+.verse-card cite{display:block;margin-top:10px;font-size:12px;color:var(--gold-dim);font-style:normal;letter-spacing:.15em;}
+
+/* ---------- 힌트 페이지 전용 ---------- */
+.hint-card{
+  width:min(88vw,420px);
+  padding:30px 26px;border-radius:14px;
+  background:linear-gradient(180deg, rgba(233,216,173,.08), rgba(233,216,173,.02));
+  border:1px solid var(--line);
+  text-align:left;
+}
+.hint-card h1{
+  margin:0 0 4px;font-size:13px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;
+}
+.hint-card h2{
+  margin:0 0 18px;font-size:clamp(18px,5vw,24px);color:var(--ink);font-weight:600;
+}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.tab-btn{
+  flex:1;min-width:64px;padding:9px 6px;border-radius:8px;border:1px solid var(--line);
+  background:transparent;color:var(--ink-dim);font-family:inherit;font-size:13px;cursor:pointer;
+}
+.tab-btn.active{background:var(--gold);color:#2a2005;border-color:var(--gold);font-weight:700;}
+.tab-panel{display:none;font-size:15px;line-height:1.8;color:var(--ink);
+  padding:14px 4px 4px;border-top:1px dashed var(--line);}
+.tab-panel.active{display:block;}
+.hint-card .fill-me{
+  color:var(--gold-dim);font-style:italic;
+}
+.hint-foot{margin-top:18px;font-size:12px;color:var(--ink-dim);letter-spacing:.05em;}
+
+/* ---------- 유틸 ---------- */
+.fade-in{animation:fadeIn 1.2s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.delay-1{animation-delay:.3s;}
+.delay-2{animation-delay:.9s;}
+.delay-3{animation-delay:1.6s;}
+
+.footer-mark{
+  position:absolute;bottom:10px;left:0;right:0;text-align:center;
+  font-size:10px;letter-spacing:.3em;color:rgba(185,173,145,.35);text-transform:uppercase;
+  z-index:1;
+}
+
+@media (min-width:820px){
+  .stage{max-width:520px;margin:0 auto;box-shadow:0 0 120px rgba(0,0,0,.6);}
+}
+
+/* ---------- 문제 보기 페이지 전용 (스크롤 가능) ---------- */
+html.scroll-page,html.scroll-page body{overflow:auto;height:auto;}
+.stage.scroll{height:auto;min-height:100dvh;overflow:visible;padding:44px 0 60px;}
+.problem-card{
+  width:min(92vw,460px);
+  padding:26px 22px 30px;border-radius:14px;
+  background:linear-gradient(180deg, rgba(233,216,173,.08), rgba(233,216,173,.02));
+  border:1px solid var(--line);
+  text-align:left;
+}
+.problem-card h1{margin:0 0 4px;font-size:13px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;}
+.problem-card h2{margin:0 0 14px;font-size:clamp(18px,5vw,24px);color:var(--ink);font-weight:600;}
+.problem-card .note{font-size:13px;line-height:1.85;color:var(--ink-dim);margin:10px 0;}
+.problem-card .note b{color:var(--gold-bright);}
+.problem-card .warn{color:#e2a24c;}
+.problem-card img{width:100%;display:block;border-radius:10px;border:1px solid var(--line);margin:16px 0;background:#fdf8ec;}
+.problem-card .answer-note{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);font-size:14px;color:var(--gold-bright);line-height:1.75;}
+.problem-card .fill-me{color:var(--gold-dim);font-style:italic;font-size:13px;}
+.team-picker{display:flex;gap:8px;margin:14px 0 18px;flex-wrap:wrap;}
+.team-picker a{flex:1;min-width:66px;text-align:center;padding:12px 6px;border-radius:8px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14px;}
+.team-picker a:active{background:var(--gold);color:#2a2005;}
+.team-badge{display:inline-block;padding:3px 12px;border-radius:20px;background:var(--gold);color:#2a2005;font-size:12px;font-weight:700;letter-spacing:.05em;margin-bottom:10px;}
+
+/* ---------- 배경음악 토글 버튼 ---------- */
+.bgm-toggle{
+  position:fixed;top:calc(16px + env(safe-area-inset-top));left:16px;z-index:40;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line);background:rgba(15,22,38,.65);
+  color:var(--ink-dim);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);cursor:pointer;
+}
+.bgm-toggle.playing{color:var(--gold-bright);border-color:var(--gold);}
+.bgm-toggle.nomusic{opacity:.32;}
+
+/* ---------- 스토리 카드 (미션 시작 전 이야기) ---------- */
+.story-card{
+  width:min(92vw,460px);margin-bottom:14px;
+  padding:22px 22px 24px;border-radius:14px;
+  background:linear-gradient(180deg, rgba(15,22,38,.5), rgba(15,22,38,.2));
+  border:1px solid var(--line);
+  text-align:left;
+}
+.story-card .eyebrow{margin-bottom:10px;text-align:left;}
+.story-card p{font-size:15px;line-height:1.9;color:var(--ink);margin:0 0 10px;}
+.story-card p:last-child{margin-bottom:0;}
+.story-card p b{color:var(--gold-bright);}
+.reveal-btn{
+  display:block;width:min(92vw,460px);margin:6px 0 20px;padding:14px;
+  border-radius:10px;border:1px solid var(--gold-dim);background:transparent;
+  color:var(--gold-bright);font-family:inherit;font-size:15px;letter-spacing:.05em;
+  cursor:pointer;text-align:center;
+}
+.reveal-btn:active{background:var(--gold);color:#2a2005;}
+
+/* ---------- 스토리 → 미션 전환 애니메이션 ---------- */
+.story-card.leaving,
+.reveal-btn.leaving{
+  opacity:0;pointer-events:none;
+  transition:opacity .42s ease, transform .42s ease, filter .42s ease;
+}
+.story-card.leave-riseup.leaving{transform:translateY(-26px);}
+.story-card.leave-scale.leaving{transform:scale(.9);}
+.story-card.leave-dissolve.leaving{filter:blur(9px);}
+.story-card.leave-wipe.leaving{clip-path:inset(0 0 100% 0);transition:clip-path .46s cubic-bezier(.6,0,.2,1), opacity .3s ease .16s;}
+
+.reveal-target{opacity:0;transition:opacity .65s ease, transform .65s ease, filter .65s ease;}
+.reveal-target.in{opacity:1;}
+.reveal-target.enter-riseup{transform:translateY(30px);}
+.reveal-target.enter-riseup.in{transform:translateY(0);}
+.reveal-target.enter-scale{transform:scale(.9);}
+.reveal-target.enter-scale.in{transform:scale(1);}
+.reveal-target.enter-dissolve{filter:blur(10px);}
+.reveal-target.enter-dissolve.in{filter:blur(0);}
+.reveal-target.enter-wipe{clip-path:inset(0 100% 0 0);}
+.reveal-target.enter-wipe.in{clip-path:inset(0 0 0 0);transition:clip-path .75s cubic-bezier(.6,0,.2,1), opacity .3s ease;}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>① M1 힌트 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 힌트/문제 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="scene-layer on">
+    <div class="hint-card fade-in">
+      <h1>① 뜰 · 숨은 QR (조립판 뒤)</h1>
+      <h2>M1 힌트</h2>
+      <div class="tab-panel active" data-tab="m1">
+        <p class="fill-me">
+          여기에 M1(조각 찾기) 힌트 문구를 적어주세요.<br>
+          예: "카드의 규칙을 다시 읽어보라. 색이 아니라 모양을 보라."
+        </p>
+      </div>
+      <div class="hint-foot">막힌 조만 스캔하세요. 정답을 그대로 알려주기보다, 다시 살펴볼 방향을 알려주는 정도로 적는 걸 권장합니다.</div>
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#8a6f34', density: 24 });
+  initScene({ timeline: function () {
+    var layer = document.querySelector('.scene-layer');
+    return [{ at: 0, do: function () { layer.classList.add('on'); } }];
+  } });
+  initBgm();
+</script>
+</body>
+</html>

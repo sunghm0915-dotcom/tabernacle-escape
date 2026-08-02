@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" class="scroll-page">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>⑤ M5 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage scroll">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="story-card" id="storyBox">
+    <div class="eyebrow">성소, 3층</div>
+    <p>번제단과 물두멍을 뜰에 세우고, 성소 안으로 들어섰다.</p>
+    <p>성소 안에는 아직 자리를 찾지 못한 세 기구 — <b>진설병, 분향단, 등잔대</b> — 가 놓여 있다. 이들을 올바른 자리에 배치해야 성소가 완성된다.</p>
+  </div>
+  <button class="reveal-btn" id="revealBtn">▶ 임무 확인하기</button>
+
+  <div class="problem-card" id="missionBox" style="display:none;">
+    <h1>⑤ 성소 · 3층</h1>
+    <h2>M5 문제 — 이등변삼각형의 내심·외심·무게중심</h2>
+    <p class="note">
+      (1) 이등변삼각형을 하나 그리세요.<br>
+      (2) 그 삼각형의 <b>내심, 외심, 무게중심</b>을 모두 작도하세요.
+    </p>
+    <p class="note">
+      꼭지각의 크기에 따라 세 점이 놓이는 순서는 다르지만, 세 점 모두 <b>밑변의 수직이등분선 위</b>에 있습니다.
+    </p>
+    <p class="note">진행 방법 — 중1 학생이 세 점(내심·외심·무게중심)의 정의를 먼저 말해보세요. 그다음 조원들이 함께 작도합니다. 중1 학생이 이해했는지 확인한 뒤 다음 단계로 넘어가세요.</p>
+    <div class="answer-note">
+      작도한 세 점을 성소의 세 기구 — <b>진설병, 분향단, 등잔대</b> — 의 자리에 대응시키세요.<br><br>
+      어느 점이 어느 기구인지는 알려주지 않습니다. 성막의 입구가 <b>동쪽</b>이라는 것을 떠올려, 세 기구가 실제로 어디에 놓이는지 스스로 판단해보세요.
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script>
+  var bgm = initBgm();
+  startParticles(document.querySelector('.bg-particles'), { color: '#d4af5a', density: 30 });
+  document.getElementById('revealBtn').addEventListener('click', function () {
+    revealTransition(document.getElementById('storyBox'), this, document.getElementById('missionBox'), 'riseup');
+    if (bgm) bgm.playFromGesture();
+  });
+</script>
+</body>
+</html>
