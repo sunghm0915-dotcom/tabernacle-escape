@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>① 조각 확인 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 힌트/문제 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="scene-layer on">
+    <div class="hint-card fade-in" style="text-align:center;">
+      <h1>① 뜰 · 조각 뒷면 표시</h1>
+      <h2>진짜 조각을 찾았다</h2>
+      <div class="tab-panel active" data-tab="m1c">
+        <p style="font-size:16px;line-height:1.9;">
+          이 조각은 <b style="color:var(--gold-bright);">진짜</b>입니다.<br>
+          7개를 모두 찾으면 위로 올라가세요.
+        </p>
+      </div>
+      <div class="hint-foot" style="margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);
+        font-size:15px;color:var(--gold-bright);letter-spacing:.03em;">
+        다음 행동 — 2층 안뜰로 올라가시오
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#d4af5a', density: 30 });
+  initScene({ timeline: function () {
+    var layer = document.querySelector('.scene-layer');
+    return [{ at: 0, do: function () { layer.classList.add('on'); } }];
+  } });
+  initBgm();
+</script>
+</body>
+</html>

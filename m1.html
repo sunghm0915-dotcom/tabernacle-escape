@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko" class="scroll-page">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>① M1 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage scroll">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="story-card intro-riseup glow-gold" id="storyBox">
+    <div class="eyebrow">뜰, 흩어진 것들</div>
+    <p>모세의 편지를 읽고 뜰에 들어섰다.</p>
+    <p>바닥에는 무언가의 조각들이 어지럽게 흩어져 있다. 하나같이 비슷해 보이지만, 자세히 들여다보면 조금씩 다르다 — <b>진짜와 가짜</b>가 뒤섞여 있는 것 같다.</p>
+    <p>성막을 다시 지으려면, 먼저 진짜 조각을 모두 찾아내야 한다.</p>
+  </div>
+  <button class="reveal-btn" id="revealBtn">▶ 임무 확인하기</button>
+
+  <div class="problem-card" id="missionBox" style="display:none;">
+    <h1>① 뜰 · 1층</h1>
+    <h2>M1 — 흩어진 조각을 찾아라</h2>
+    <p class="note">
+      <b>꼬깔을 모두 착용하세요.</b><br>
+      바닥에 흩어진 조각 가운데 <b>진짜 조각은 모두 7개</b>입니다. 가짜 조각들 사이에서 진짜 7개를 모두 찾아내세요.
+    </p>
+    <p class="note">진짜 조각의 뒷면(또는 눈에 잘 띄지 않는 자리)에는 작은 표식이 있습니다. 7개를 모두 찾으면, 그 표식이 다음 할 일을 알려줍니다.</p>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#d4af5a', density: 40 });
+  var bgm = initBgm();
+  document.getElementById('revealBtn').addEventListener('click', function () {
+    revealTransition(document.getElementById('storyBox'), this, document.getElementById('missionBox'), 'riseup');
+    if (bgm) bgm.playFromGesture();
+  });
+</script>
+</body>
+</html>

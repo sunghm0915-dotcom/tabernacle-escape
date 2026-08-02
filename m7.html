@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" class="scroll-page">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>⑦ M7 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage scroll">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="story-card intro-wipe glow-teal" id="storyBox">
+    <div class="eyebrow">4층</div>
+    <p>상자를 열자 쪽지 하나 — "4층으로 가라."</p>
+    <p>4층에 올라서니 시작 지점이 표시되어 있다. 이곳에서부터, 숫자와 방향을 스스로 풀어내며 언약궤를 찾아야 한다.</p>
+  </div>
+  <button class="reveal-btn" id="revealBtn">▶ 임무 확인하기</button>
+
+  <div class="problem-card" id="pickerBox" style="display:none;">
+    <h1>⑦ 4층</h1>
+    <h2>M7 문제 — 우리 조 번호를 고르세요</h2>
+    <p class="note">아래에서 우리 조 번호를 눌러주세요.</p>
+    <div class="team-picker">
+      <a href="?team=1">1조</a>
+      <a href="?team=2">2조</a>
+      <a href="?team=3">3조</a>
+      <a href="?team=4">4조</a>
+    </div>
+  </div>
+
+  <div class="problem-card" id="problemBox" style="display:none;">
+    <h1>⑦ 4층</h1>
+    <span class="team-badge" id="teamBadge"></span>
+    <h2>M7 문제 — 삼각비</h2>
+    <img id="problemImg" src="" alt="M7 문제">
+    <div class="answer-note">이 문제를 풀어 나온 숫자가, 이제부터 걸음 수와 방향을 정하는 데 쓰입니다. 현장에 표시된 방법대로 답을 적용해 언약궤를 찾으세요.</div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script src="assets/js/reveal.js"></script>
+<script>
+  var bgm = initBgm();
+  startParticles(document.querySelector('.bg-particles'), { color: '#8a6f34', density: 30 });
+
+  var params = new URLSearchParams(location.search);
+  var team = params.get('team');
+  var hasTeam = team && ['1','2','3','4'].indexOf(team) !== -1;
+
+  function fillProblem() {
+    document.getElementById('teamBadge').textContent = team + '조';
+    document.getElementById('problemImg').src = 'assets/img/m7-' + team + '.jpg';
+  }
+
+  document.getElementById('revealBtn').addEventListener('click', function () {
+    if (hasTeam) fillProblem();
+    var target = hasTeam ? document.getElementById('problemBox') : document.getElementById('pickerBox');
+    revealTransition(document.getElementById('storyBox'), this, target, 'wipe');
+    if (bgm) bgm.playFromGesture();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>⑦ 4층 안내 — 성막 방탈출</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="stage">
+  <canvas class="bg-particles"></canvas>
+  <!-- BGM: 문제·힌트 페이지는 전부 assets/audio/bgm.mp3 하나를 같이 씁니다. 그 이름으로 파일 하나만 올리면 모든 힌트/문제 화면에 소리가 켜집니다. -->
+  <audio class="bgm" loop preload="none" src="assets/audio/bgm.mp3"></audio>
+
+  <div class="scene-layer on">
+    <div class="hint-card fade-in" style="text-align:center;">
+      <h1>⑦ 4층 · 시작점 QR</h1>
+      <h2>언약궤를 찾으라</h2>
+      <div class="tab-panel active" data-tab="m7i">
+        <p style="font-size:15px;line-height:1.9;text-align:left;">
+          이곳에서부터 시작한다.<br><br>
+          문제를 풀면 <b style="color:var(--gold-bright);">숫자와 방향</b>이 나온다.<br>
+          그 걸음과 방향을 따라가면, 그다음 문제가 기다리고 있다.<br>
+          마지막 문제를 풀면 언약궤가 있는 곳을 정확히 가리킨다.
+        </p>
+      </div>
+      <div class="hint-foot" style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);
+        font-size:13px;line-height:1.8;">
+        ⚠ 4층에는 한 번에 한 조만 들어올 수 있습니다.<br>
+        5분이 지나면 기다리는 조와 교체합니다.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-mark">2026 수학비전캠프 · 성막 방탈출</div>
+</div>
+
+<script src="assets/js/particles.js"></script>
+<script src="assets/js/scene.js"></script>
+<script src="assets/js/bgm.js"></script>
+<script>
+  startParticles(document.querySelector('.bg-particles'), { color: '#8a6f34', density: 30 });
+  initScene({ timeline: function () {
+    var layer = document.querySelector('.scene-layer');
+    return [{ at: 0, do: function () { layer.classList.add('on'); } }];
+  } });
+  initBgm();
+</script>
+</body>
+</html>
