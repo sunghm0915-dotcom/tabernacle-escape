@@ -37,7 +37,7 @@ html,body{
   background:
     radial-gradient(ellipse at 50% 20%, rgba(212,175,90,.10), transparent 60%),
     linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 70%, #04060b 100%);
-  display:flex;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 
 /* 은은한 별/모래 캔버스 */
@@ -332,23 +332,60 @@ html.scroll-page,html.scroll-page body{overflow:auto;height:auto;}
 
 /* ---------- 스토리 카드 (미션 시작 전 이야기) ---------- */
 .story-card{
+  position:relative;overflow:visible;
   width:min(92vw,460px);margin-bottom:14px;
   padding:22px 22px 24px;border-radius:14px;
   background:linear-gradient(180deg, rgba(15,22,38,.5), rgba(15,22,38,.2));
   border:1px solid var(--line);
   text-align:left;
+  opacity:0;
+  animation-duration:1.05s;animation-timing-function:cubic-bezier(.2,.8,.2,1);
+  animation-fill-mode:forwards;animation-delay:.15s;
+  box-shadow:0 0 0 rgba(0,0,0,0);
 }
 .story-card .eyebrow{margin-bottom:10px;text-align:left;}
 .story-card p{font-size:15px;line-height:1.9;color:var(--ink);margin:0 0 10px;}
 .story-card p:last-child{margin-bottom:0;}
 .story-card p b{color:var(--gold-bright);}
+
+/* 카드 뒤로 은은하게 번지는 빛 (미션마다 색이 다릅니다) */
+.story-card::before{
+  content:"";position:absolute;inset:-46% -18%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 28%, var(--story-glow, rgba(212,175,90,.4)), transparent 68%);
+  opacity:0;
+  animation:storyGlow 2s ease-out forwards;
+  animation-delay:.15s;
+}
+@keyframes storyGlow{
+  0%{opacity:0;transform:scale(.6);}
+  40%{opacity:1;transform:scale(1.08);}
+  100%{opacity:0;transform:scale(1.22);}
+}
+.glow-gold{--story-glow:rgba(243,217,140,.42);}
+.glow-amber{--story-glow:rgba(212,150,68,.4);}
+.glow-blue{--story-glow:rgba(150,190,255,.34);}
+.glow-red{--story-glow:rgba(230,110,90,.38);}
+.glow-teal{--story-glow:rgba(110,205,195,.34);}
+
+.story-card.intro-riseup{animation-name:introRiseup;}
+.story-card.intro-dissolve{animation-name:introDissolve;}
+.story-card.intro-scale{animation-name:introScale;}
+.story-card.intro-wipe{animation-name:introWipe;}
+@keyframes introRiseup{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+@keyframes introDissolve{from{opacity:0;filter:blur(11px);}to{opacity:1;filter:blur(0);}}
+@keyframes introScale{from{opacity:0;transform:scale(.88);}to{opacity:1;transform:scale(1);}}
+@keyframes introWipe{from{opacity:0;clip-path:inset(0 100% 0 0);}to{opacity:1;clip-path:inset(0 0 0 0);}}
+
 .reveal-btn{
   display:block;width:min(92vw,460px);margin:6px 0 20px;padding:14px;
   border-radius:10px;border:1px solid var(--gold-dim);background:transparent;
   color:var(--gold-bright);font-family:inherit;font-size:15px;letter-spacing:.05em;
   cursor:pointer;text-align:center;
+  opacity:0;
+  animation:btnIn .8s ease forwards;animation-delay:.85s;
 }
 .reveal-btn:active{background:var(--gold);color:#2a2005;}
+@keyframes btnIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
 /* ---------- 스토리 → 미션 전환 애니메이션 ---------- */
 .story-card.leaving,
